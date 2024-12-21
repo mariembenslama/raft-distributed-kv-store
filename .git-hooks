@@ -1,0 +1,6 @@
+# .git-hooks
+pre-commit:
+  mix format --check-formatted
+  mix dialyzer
+pre-push:
+  mix test

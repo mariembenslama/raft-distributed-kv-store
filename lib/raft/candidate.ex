@@ -41,13 +41,15 @@ defmodule RaftDistributedKVStore.Raft.Candidate do
 
   def init(node_name), do: {:ok, %{node: node_name, votes: 0}}
 
-  def handle_call({:request_vote, current_term}, _from, state) do
+  def handle_call({:request_vote, _}, _from, state) do
     # Simplified voting logic for candidate election
-    new_state = if state.votes < 2 do
-      %{state | votes: state.votes + 1}
-    else
-      state
-    end
+    new_state =
+      if state.votes < 2 do
+        %{state | votes: state.votes + 1}
+      else
+        state
+      end
+
     {:reply, :vote_granted, new_state}
   end
 end
