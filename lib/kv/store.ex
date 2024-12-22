@@ -43,7 +43,8 @@ defmodule RaftDistributedKVStore.KV.Store do
     - key: The key whose associated value should be retrieved.
 
   ## Returns
-    - The value associated with the key, or nil if the key doesn't exist.
+    - {:ok, value} if the key exists.
+    - :not_found if the key doesn't exist.
   """
   def get(key) do
     GenServer.call(__MODULE__, {:get, key})
@@ -51,15 +52,22 @@ defmodule RaftDistributedKVStore.KV.Store do
 
   # GenServer Callbacks
 
-  def init(state), do: {:ok, state}
+  @impl true
+  def init(_state) do
+    {:ok, %{}}
+  end
 
+  @impl true
   def handle_call({:put, key, value}, _from, state) do
     new_state = Map.put(state, key, value)
     {:reply, :ok, new_state}
   end
 
+  @impl true
   def handle_call({:get, key}, _from, state) do
-    value = Map.get(state, key, nil)
-    {:reply, value, state}
+    case Map.get(state, key) do
+      nil -> {:reply, :not_found, state}
+      value -> {:reply, {:ok, value}, state}
+    end
   end
 end

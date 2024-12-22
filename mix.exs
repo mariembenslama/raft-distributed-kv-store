@@ -7,7 +7,12 @@ defmodule RaftDistributedKVStore.MixProject do
       version: "0.1.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -23,7 +28,8 @@ defmodule RaftDistributedKVStore.MixProject do
     [
       {:amqp, "~> 3.0"},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
-      {:git_hooks, "~> 0.6.0", only: :dev}
+      {:git_hooks, "~> 0.6.0", only: :dev},
+      {:excoveralls, "~> 0.14", only: :test} # Add ExCoveralls dependency
     ]
   end
 end
