@@ -2,6 +2,9 @@
 
 RaftDistributedKVStore is an implementation of a distributed key-value store based on the Raft consensus algorithm. This project provides a simple key-value store with a Raft-based leader election mechanism and fault tolerance, using Elixir’s GenServer for state management. The store can be extended to support more advanced distributed system concepts, such as log replication, heartbeats, and leader election.
 
+## Raft Protocole animated example
+https://thesecretlivesofdata.com/raft
+
 ## Features
 
 - **Raft Consensus Algorithm**: Implements Raft's candidate, follower, and leader states to ensure fault tolerance and consistent log replication across nodes.
